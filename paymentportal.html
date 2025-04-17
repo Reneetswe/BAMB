@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - AgriConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .payment-container {
+            padding: 2rem 5%;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            background: linear-gradient(rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.1));
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .payment-methods {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .payment-method {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .payment-method img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .payment-method-details {
+            flex: 1;
+        }
+
+        .payment-method-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .payment-method-details p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .order-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 2rem;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pay-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .pay-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .payment-instructions {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .payment-instructions.active {
+            display: block;
+        }
+
+        .payment-instructions h4 {
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .payment-instructions ol {
+            padding-left: 1.5rem;
+        }
+
+        .payment-instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="https://i.imgur.com/8kJkXZh.png" alt="BAMB Logo" class="logo">
+            <h1>AgriConnect</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+    </nav>
+
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1>Select Payment Method</h1>
+        </div>
+
+        <div class="payment-grid">
+            <div class="payment-methods">
+                <div class="payment-method" data-method="myzaka">
+                    <img src="https://i.imgur.com/nwGWqHX.png" alt="MyZaka">
+                    <div class="payment-method-details">
+                        <h3>MyZaka</h3>
+                        <p>Pay securely with your MyZaka mobile money account</p>
+                    </div>
+                </div>
+
+                <div class="payment-method" data-method="orange">
+                    <img src="https://i.imgur.com/K5UIwZE.png" alt="Orange Money">
+                    <div class="payment-method-details">
+                        <h3>Orange Money</h3>
+                        <p>Quick and easy payment with Orange Money</p>
+                    </div>
+                </div>
+
+                <div class="payment-method" data-method="fnb">
+                    <img src="https://i.imgur.com/YqQh1Pv.png" alt="FNB">
+                    <div class="payment-method-details">
+                        <h3>FNB eWallet</h3>
+                        <p>Pay using your FNB bank account or eWallet</p>
+                    </div>
+                </div>
+
+                <!-- Payment Instructions -->
+                <div id="myZakaInstructions" class="payment-instructions">
+                    <h4>MyZaka Payment Instructions</h4>
+                    <ol>
+                        <li>Dial *167# on your mobile phone</li>
+                        <li>Select option 1 (Send Money)</li>
+                        <li>Enter merchant code: 12345</li>
+                        <li>Enter amount: P 1,350.00</li>
+                        <li>Enter your PIN to confirm</li>
+                        <li>Click "Confirm Payment" below once done</li>
+                    </ol>
+                </div>
+
+                <div id="orangeInstructions" class="payment-instructions">
+                    <h4>Orange Money Payment Instructions</h4>
+                    <ol>
+                        <li>Dial *145# on your mobile phone</li>
+                        <li>Choose "Pay Merchant"</li>
+                        <li>Enter merchant ID: AGRICONNECT</li>
+                        <li>Enter amount: P 1,350.00</li>
+                        <li>Confirm with your PIN</li>
+                        <li>Click "Confirm Payment" below once done</li>
+                    </ol>
+                </div>
+
+                <div id="fnbInstructions" class="payment-instructions">
+                    <h4>FNB eWallet Payment Instructions</h4>
+                    <ol>
+                        <li>Log in to your FNB App or Online Banking</li>
+                        <li>Select "Pay" or "Send Money"</li>
+                        <li>Enter recipient: AgriConnect (Business ID: 98765)</li>
+                        <li>Enter amount: P 1,350.00</li>
+                        <li>Add reference: Your order number</li>
+                        <li>Click "Confirm Payment" below once done</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-item">
+                    <span>Subtotal</span>
+                    <span>P 1,250.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Fee</span>
+                    <span>P 100.00</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Total</strong>
+                    <strong>P 1,350.00</strong>
+                </div>
+                <button id="payButton" class="pay-btn" disabled>Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const payButton = document.getElementById('payButton');
+        const instructions = {
+            myzaka: document.getElementById('myZakaInstructions'),
+            orange: document.getElementById('orangeInstructions'),
+            fnb: document.getElementById('fnbInstructions')
+        };
+
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all methods
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                
+                // Add selected class to clicked method
+                this.classList.add('selected');
+                
+                // Enable pay button
+                payButton.disabled = false;
+
+                // Hide all instructions
+                Object.values(instructions).forEach(inst => inst.classList.remove('active'));
+                
+                // Show selected method instructions
+                const methodType = this.dataset.method;
+                instructions[methodType].classList.add('active');
+            });
+        });
+
+        // Handle payment confirmation
+        payButton.addEventListener('click', function() {
+            const selectedMethod = document.querySelector('.payment-method.selected');
+            if (selectedMethod) {
+                // In a real application, this would verify the payment with the server
+                alert('Payment successful! Thank you for your order.');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

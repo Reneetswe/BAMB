@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - AgriConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cart-container {
+            padding: 2rem 5%;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            background: linear-gradient(rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.1));
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .cart-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 2fr 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+
+        .item-details p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .item-supplier {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: var(--light-gray);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .remove-btn {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .continue-shopping {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .continue-shopping:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .agricultural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .agricultural-bg img {
+            position: absolute;
+            object-fit: contain;
+        }
+
+        .agricultural-bg .crop1 {
+            top: 10%;
+            left: 5%;
+            width: 200px;
+        }
+
+        .agricultural-bg .crop2 {
+            top: 60%;
+            right: 5%;
+            width: 150px;
+        }
+
+        .agricultural-bg .animal1 {
+            bottom: 10%;
+            left: 15%;
+            width: 180px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                grid-template-rows: auto auto;
+                gap: 0.5rem;
+            }
+
+            .quantity-controls {
+                grid-column: 2;
+            }
+
+            .remove-btn {
+                grid-column: 2;
+                justify-self: end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="https://i.imgur.com/8kJkXZh.png" alt="BAMB Logo" class="logo">
+            <h1>AgriConnect</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#marketplace">Marketplace</a></li>
+            <li><a href="#orders">My Orders</a></li>
+            <li><a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i> Cart (3)</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <button class="btn login-btn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Agricultural Background Elements -->
+    <div class="agricultural-bg">
+        <img src="https://i.imgur.com/YX3pBYG.png" alt="Wheat" class="crop1">
+        <img src="https://i.imgur.com/7K2maga.png" alt="Vegetables" class="crop2">
+        <img src="https://i.imgur.com/L9jWx3H.png" alt="Cow" class="animal1">
+    </div>
+
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1>Shopping Cart</h1>
+        </div>
+
+        <div class="cart-grid">
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="https://i.imgur.com/QUzVfHX.jpg" alt="Organic Maize" class="item-image">
+                    <div class="item-details">
+                        <h3>Organic Maize</h3>
+                        <p>Grade A, Fresh Harvest</p>
+                        <span class="item-supplier">Supplier: Gaborone Farms</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span>2</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn"><i class="fas fa-trash"></i></button>
+                </div>
+
+                <div class="cart-item">
+                    <img src="https://i.imgur.com/XcGYPYZ.jpg" alt="Fresh Eggs" class="item-image">
+                    <div class="item-details">
+                        <h3>Farm Fresh Eggs</h3>
+                        <p>30 pieces per tray</p>
+                        <span class="item-supplier">Supplier: Serowe Poultry</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span>1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn"><i class="fas fa-trash"></i></button>
+                </div>
+
+                <div class="cart-item">
+                    <img src="https://i.imgur.com/9MYJIZm.jpg" alt="Sorghum" class="item-image">
+                    <div class="item-details">
+                        <h3>Premium Sorghum</h3>
+                        <p>50kg bag</p>
+                        <span class="item-supplier">Supplier: BAMB Francistown</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span>3</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <button class="remove-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-item">
+                    <span>Subtotal</span>
+                    <span>P 1,250.00</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Fee</span>
+                    <span>P 100.00</span>
+                </div>
+                <div class="summary-item">
+                    <strong>Total</strong>
+                    <strong>P 1,350.00</strong>
+                </div>
+                <button class="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart functionality
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const quantitySpan = this.parentElement.querySelector('span');
+                let quantity = parseInt(quantitySpan.textContent);
+                
+                if (this.textContent === '+') {
+                    quantity++;
+                } else if (this.textContent === '-' && quantity > 1) {
+                    quantity--;
+                }
+                
+                quantitySpan.textContent = quantity;
+                updateTotal();
+            });
+        });
+
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.cart-item').remove();
+                updateTotal();
+                
+                // Update cart count in nav
+                const cartItems = document.querySelectorAll('.cart-item').length;
+                document.querySelector('.nav-links a.active').innerHTML = 
+                    `<i class="fas fa-shopping-cart"></i> Cart (${cartItems})`;
+                
+                if (cartItems === 0) {
+                    showEmptyCart();
+                }
+            });
+        });
+
+        function showEmptyCart() {
+            const cartItems = document.querySelector('.cart-items');
+            cartItems.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h2>Your cart is empty</h2>
+                    <p>Looks like you haven't added any items to your cart yet.</p>
+                    <a href="#marketplace" class="continue-shopping">Continue Shopping</a>
+                </div>
+            `;
+            document.querySelector('.cart-summary').style.display = 'none';
+        }
+
+        function updateTotal() {
+            // In a real application, this would calculate based on actual prices
+            const items = document.querySelectorAll('.cart-item').length;
+            const subtotal = items * 250; // Example calculation
+            const delivery = 100;
+            const total = subtotal + delivery;
+
+            document.querySelector('.summary-item:nth-child(1) span:last-child').textContent = 
+                `P ${subtotal.toFixed(2)}`;
+            document.querySelector('.summary-item:last-child strong:last-child').textContent = 
+                `P ${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - AgriConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="https://i.imgur.com/8kJkXZh.png" alt="BAMB Logo" class="logo">
+            <h1>AgriConnect</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketplace.html" class="active">Marketplace</a></li>
+            <li><a href="#orders">My Orders</a></li>
+            <li>
+                <a href="carts" class="cart-badge" data-count="0">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+            </li>
+        </ul>
+        <div class="auth-buttons">
+            <button class="btn login-btn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="marketplace-container">
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for products...">
+            </div>
+            <div class="filter-options">
+                <select class="filter-select">
+                    <option value="">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="newest">Newest First</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Location</option>
+                    <option value="gaborone">Gaborone</option>
+                    <option value="francistown">Francistown</option>
+                    <option value="maun">Maun</option>
+                    <option value="serowe">Serowe</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="categories-section">
+            <div class="categories-list">
+                <button class="category-btn active">All Products</button>
+                <button class="category-btn">Grains</button>
+                <button class="category-btn">Vegetables</button>
+                <button class="category-btn">Fruits</button>
+                <button class="category-btn">Dairy & Eggs</button>
+                <button class="category-btn">Meat & Poultry</button>
+                <button class="category-btn">Seeds</button>
+                <button class="category-btn">Equipment</button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid">
+            <!-- Product Card 1 -->
+            <div class="product-card">
+                <img src="https://i.imgur.com/QUzVfHX.jpg" alt="Premium Maize" class="product-image">
+                <div class="product-details">
+                    <span class="product-category">Grains</span>
+                    <h3 class="product-title">Premium Quality Maize</h3>
+                    <div class="product-info">
+                        <span class="product-price">P 250.00</span>
+                        <span class="product-supplier">Gaborone Farms</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(4.5)</span>
+                    </div>
+                    <div class="product-stock">
+                        <i class="fas fa-check-circle"></i> In Stock
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="product-card">
+                <img src="https://i.imgur.com/XcGYPYZ.jpg" alt="Farm Fresh Eggs" class="product-image">
+                <div class="product-details">
+                    <span class="product-category">Dairy & Eggs</span>
+                    <h3 class="product-title">Farm Fresh Eggs</h3>
+                    <div class="product-info">
+                        <span class="product-price">P 45.00</span>
+                        <span class="product-supplier">Serowe Poultry</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(5.0)</span>
+                    </div>
+                    <div class="product-stock">
+                        <i class="fas fa-check-circle"></i> In Stock
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="product-card">
+                <img src="https://i.imgur.com/9MYJIZm.jpg" alt="Premium Sorghum" class="product-image">
+                <div class="product-details">
+                    <span class="product-category">Grains</span>
+                    <h3 class="product-title">Premium Sorghum</h3>
+                    <div class="product-info">
+                        <span class="product-price">P 180.00</span>
+                        <span class="product-supplier">BAMB Francistown</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(4.0)</span>
+                    </div>
+                    <div class="product-stock">
+                        <i class="fas fa-check-circle"></i> In Stock
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 4 -->
+            <div class="product-card">
+                <img src="https://i.imgur.com/7K2maga.png" alt="Fresh Vegetables" class="product-image">
+                <div class="product-details">
+                    <span class="product-category">Vegetables</span>
+                    <h3 class="product-title">Fresh Vegetable Bundle</h3>
+                    <div class="product-info">
+                        <span class="product-price">P 120.00</span>
+                        <span class="product-supplier">Maun Fresh Farms</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(4.5)</span>
+                    </div>
+                    <div class="product-stock">
+                        <i class="fas fa-check-circle"></i> In Stock
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="favorite-btn">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+</html>

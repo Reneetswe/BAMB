@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AgriConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.1));
+        }
+
+        .register-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark-gray);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group select {
+            background-color: white;
+        }
+
+        .form-group.phone-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .phone-prefix {
+            width: 80px !important;
+            background-color: var(--light-gray);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error select {
+            border-color: #e74c3c;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .register-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+		@model AgriConnect.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register - AgriConnect";
+    Layout = "_Layout";
+}
+
+<div class="auth-container">
+    <div class="auth-form">
+        <div class="form-header">
+            <img src="https://i.imgur.com/8kJkXZh.png" alt="BAMB Logo" class="logo">
+            <h2>Create Account</h2>
+        </div>
+
+        <form asp-controller="Auth" asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="UserType"></label>
+                <select asp-for="UserType" class="form-control">
+                    <option value="">Select User Type</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Farmer">Supplier/Farmer</option>
+                    <option value="BAMBEmployee">BAMB Employee</option>
+                </select>
+                <span asp-validation-for="UserType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Enter your 8-digit phone number" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" placeholder="Enter your password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input asp-for="RememberMe" />
+                    <span asp-for="RememberMe">Remember me</span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <div class="auth-links">
+            <p>Already have an account? <a asp-controller="Auth" asp-action="Login">Login here</a></p>
+        </div>
+    </div>
+</div>
+	
+@section Scripts {
+    <script>
+        // Client-side validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const phoneNumber = document.querySelector('#PhoneNumber').value;
+            const password = document.querySelector('#Password').value;
+            const confirmPassword = document.querySelector('#ConfirmPassword').value;
+
+            if (phoneNumber.length !== 8 || !/^\d+$/.test(phoneNumber)) {
+                e.preventDefault();
+                showError('Phone number must be exactly 8 digits');
+                return;
+            }
+
+            if (password.length < 8) {
+                e.preventDefault();
+                showError('Password must be at least 8 characters long');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                showError('Passwords do not match');
+                return;
+            }
+        });
+
+        function showError(message) {
+            const errorDiv = document.querySelector('.validation-summary-errors');
+            if (errorDiv) {
+                errorDiv.innerHTML = `<ul><li>${message}</li></ul>`;
+            } else {
+                const div = document.createElement('div');
+                div.className = 'validation-summary-errors text-danger';
+                div.innerHTML = `<ul><li>${message}</li></ul>`;
+                document.querySelector('form').prepend(div);
+            }
+        }
+    </script>
+}
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="https://via.placeholder.com/50" alt="AgriConnect Logo" class="logo">
+            <h1>AgriConnect</h1>
+        </div>
+        <div class="auth-buttons">
+            <a href="index.html" class="btn login-btn">Home</a>
+        </div>
+    </nav>
+
+    <div class="register-container">
+        <form class="register-form" id="registerForm" novalidate>
+            <h2>Create an Account</h2>
+            
+            <div class="form-group">
+                <label for="userType">User Type*</label>
+                <select id="userType" name="userType" required>
+                    <option value="">Select user type</option>
+                    <option value="customer">Customer</option>
+                    <option value="supplier">Supplier/Farmer</option>
+                    <option value="bamb">BAMB Employee</option>
+                </select>
+                <div class="error-message">Please select a user type</div>
+            </div>
+				
+            <div class="form-group">
+                <label for="fullName">Full Name*</label>
+                <input type="text" id="fullName" name="fullName" required>
+                <div class="error-message">Please enter your full name</div>
+            </div>
+
+            <div class="form-group phone-input">
+                <input type="text" class="phone-prefix" value="+267" readonly>
+                <div style="flex: 1;">
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9]{8}" maxlength="8">
+                    <div class="error-message">Please enter a valid 8-digit phone number</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password*</label>
+                <input type="password" id="password" name="password" required minlength="8">
+                <div class="error-message">Password must be at least 8 characters long</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password*</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message">Passwords do not match</div>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember me</label>
+            </div>
+
+            <button type="submit" class="register-btn">Register</button>
+
+            <div class="login-link">
+                Already have an account? <a href="index.html">Login here</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+
+            let hasError = false;
+
+            // User Type validation
+            const userType = document.getElementById('userType');
+            if (!userType.value) {
+                userType.parentElement.classList.add('error');
+                hasError = true;
+            }
+
+            // Full Name validation
+            const fullName = document.getElementById('fullName');
+            if (!fullName.value.trim()) {
+                fullName.parentElement.classList.add('error');
+                hasError = true;
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone');
+            const phoneRegex = /^[0-9]{8}$/;
+            if (!phoneRegex.test(phone.value)) {
+                phone.parentElement.parentElement.classList.add('error');
+                hasError = true;
+            }
+
+            // Password validation
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            
+            if (password.value.length < 8) {
+                password.parentElement.classList.add('error');
+                hasError = true;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.parentElement.classList.add('error');
+                hasError = true;
+            }
+
+            if (!hasError) {
+                // Form is valid, prepare data for submission
+                const formData = {
+                    userType: userType.value,
+                    fullName: fullName.value,
+                    phone: '+267' + phone.value,
+                    password: password.value,
+                    rememberMe: document.getElementById('rememberMe').checked
+                };
+
+                // Here you would typically send the data to your server
+                console.log('Form submitted:', formData);
+                alert('Registration successful! You can now login.');
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Real-time password match validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (password !== confirmPassword) {
+                this.parentElement.classList.add('error');
+            } else {
+                this.parentElement.classList.remove('error');
+            }
+        });
+
+        // Phone number validation - only allow numbers
+        document.getElementById('phone').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using AgriConnect.Models;
+using System.Threading.Tasks;
+
+namespace AgriConnect.Controllers
+{
+    public class AuthController : Controller
+    {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.PhoneNumber,
+                    PhoneNumber = model.PhoneNumber,
+                    FullName = model.FullName,
+                    UserType = model.UserType
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    // Add user to appropriate role
+                    await _userManager.AddToRoleAsync(user, model.UserType);
+                    
+                    // Sign in the user
+                    await _signInManager.SignInAsync(user, isPersistent: model.RememberMe);
+
+                    // Redirect based on user type
+                    switch (model.UserType)
+                    {
+                        case "Customer":
+                            return RedirectToAction("Index", "Customer");
+                        case "Farmer":
+                            return RedirectToAction("Index", "Farmer");
+                        case "BAMBEmployee":
+                            return RedirectToAction("Index", "Employee");
+                        default:
+                            return RedirectToAction("Index", "Home");
+                    }
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+    }
+}

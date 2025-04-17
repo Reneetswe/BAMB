@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AgriConnect</title>
+    <link rel="stylesheet" href="styledash.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!-- <style>
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: var(--dark-gray);
+            color: white;
+            padding: 2rem;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            background: var(--light-gray);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h1 {
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        .welcome-message p {
+            margin: 0.5rem 0 0;
+            color: var(--text-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.products {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--primary-color);
+        }
+
+        .stat-icon.orders {
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent-color);
+        }
+
+        .stat-icon.revenue {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .stat-icon.farmers {
+            background: rgba(155, 89, 182, 0.1);
+            color: #9b59b6;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--dark-gray);
+        }
+
+        .stat-info p {
+            margin: 0.2rem 0 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-header h3 {
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        /* Recent Activity */
+        .activity-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .activity-icon.order {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--primary-color);
+        }
+
+        .activity-icon.payment {
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent-color);
+        }
+
+        .activity-icon.stock {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .activity-details h4 {
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        .activity-details p {
+            margin: 0.2rem 0 0;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            margin-left: auto;
+            color: var(--text-color);
+            font-size: 0.85rem;
+        }
+
+        /* Agricultural Background */
+        .agricultural-decor {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style> -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://i.imgur.com/8kJkXZh.png" alt="BAMB Logo">
+                <h2>AgriConnect</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-store"></i> Marketplace</a></li>
+                <li><a href="#"><i class="fas fa-box"></i> Inventory</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Farmers</a></li>
+                <li><a href="#"><i class="fas fa-truck"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <div class="welcome-message">
+                    <h1>Welcome back, BAMB Admin</h1>
+                    <p>Here's what's happening with your agricultural marketplace today</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn"><i class="fas fa-bell"></i></button>
+                    <button class="btn"><i class="fas fa-user"></i></button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon products">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2,345</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orders">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>156</h3>
+                        <p>New Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon revenue">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>P 45,678</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon farmers">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>892</h3>
+                        <p>Active Farmers</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Sales Overview</h3>
+                        <select>
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                            <option>Last Year</option>
+                        </select>
+                    </div>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Top Products</h3>
+                        <select>
+                            <option>By Revenue</option>
+                            <option>By Quantity</option>
+                        </select>
+                    </div>
+                    <canvas id="productsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h3>Recent Activity</h3>
+                    <button class="btn">View All</button>
+                </div>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon order">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>New Order #12345</h4>
+                            <p>50kg Premium Maize from Gaborone Farms</p>
+                        </div>
+                        <span class="activity-time">2 minutes ago</span>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon payment">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Payment Received</h4>
+                            <p>P 2,500 received from Serowe Market</p>
+                        </div>
+                        <span class="activity-time">15 minutes ago</span>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon stock">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Low Stock Alert</h4>
+                            <p>Sorghum stock below 100kg threshold</p>
+                        </div>
+                        <span class="activity-time">1 hour ago</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Agricultural Decorative Elements -->
+            <img src="https://i.imgur.com/YX3pBYG.png" alt="Wheat" class="agricultural-decor">
+        </main>
+    </div>
+
+    <script>
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [12, 19, 15, 17, 22, 25, 20],
+                    borderColor: '#2ecc71',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Products Chart
+        const productsCtx = document.getElementById('productsChart').getContext('2d');
+        new Chart(productsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Maize', 'Sorghum', 'Beans', 'Eggs', 'Vegetables'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        '#2ecc71',
+                        '#f1c40f',
+                        '#3498db',
+                        '#9b59b6',
+                        '#e74c3c'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
